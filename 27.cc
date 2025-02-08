@@ -46,36 +46,43 @@ std::string to_string(const T& first, const Args&... rest) {
 // Macro for easy usage
 #define print(...) (std::cout << to_string(__VA_ARGS__) << std::endl)
 
+auto is_prime(int n) -> bool{
+    for(int i = 2; i*i<=n; i++) {
+        if(n%i == 0) return false;
+    }
+    return n>=2;
+}
+
+auto max_primes(int a,int b) -> int {
+    int n = 0;
+    int x = n*n+a*n+b;
+    while(is_prime(x)) {
+        //print(x);
+        n++;
+        x = n*n+a*n+b;
+    }
+    return n;
+}
 
 void solve(){
-    int n = 9;
-    string nums="123456789";  
-    set<int> ans;
-
-    do{
-        for(int mul = 1; mul<n; mul++) {
-            for(int eq = mul+2; eq<n; eq++) {
-                // a*b=c
-                string A,B,C;
-                for(int i =0; i<mul; i++) A+=nums[i];
-                for(int i =mul; i<eq; i++) B+=nums[i];
-                for(int i =eq; i<n; i++) C+=nums[i];
-                int a = stoi(A);
-                int b = stoi(B);
-                int c = stoi(C);
-                if(a*b==c) {
-                    print(a,b,c);
-                    ans.insert(c);
-                }
+    int al=-999, ah = 999;
+    int bl= -1000,bh =1000;
+    int ans = INT_MIN;
+    int A = 0,B = 0;
+    print(max_primes(1,41));
+    for(int a=al; a<=ah; a++) {
+        for(int b=bl; b<=bh; b++) {
+            int mp = max_primes(a,b);
+            if(ans<mp){
+                A = a;
+                B = b;
+                ans = mp;
             }
         }
-    } while(next_permutation(nums.begin(), nums.end()));
-    int sum = 0;
-    for(auto e: ans) {
-        sum += e;
     }
-    print(sum);
+    print(A*B);
 }
+ 
 int32_t main() {
     fast;
     solve();

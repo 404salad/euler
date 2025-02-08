@@ -1,4 +1,3 @@
-import 26_div
 """
 A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
 
@@ -33,6 +32,3 @@ for d in range(1000,1,-1):
     if is_repeater(d):
         print(d,1/d)
  
-number = 
-divisor 
-
