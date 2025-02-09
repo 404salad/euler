@@ -2,22 +2,21 @@
 extern crate prime_factorization;
 use prime_factorization::Factorization;
 fn main() {
-    let mut i:u128 =1779441;
-    let mut j:u128 = 2;
-    loop{
+    let mut i: u128 = 1779441;
+    let mut j: u128 = 2;
+    loop {
         let factorsnum = factorsn(i);
         println!("{i} {factorsnum}");
-        if factorsnum>300{
+        if factorsnum > 300 {
             break;
         }
-        i+=j; 
-        j+=1;
+        i += j;
+        j += 1;
     }
 }
 
-fn factorsn(num:u128) -> u128{
+fn factorsn(num: u128) -> u128 {
     let factor_repr = Factorization::run(num);
-
 }
 /*
     let mut count = 0;
