@@ -1,34 +1,52 @@
-"""
-A unit fraction contains 1 in the numerator. The decimal representation of the unit fractions with denominators 2 to 10 are given:
+import math
 
-    1/2	= 	0.5
-    1/3	= 	0.(3)
-    1/4	= 	0.25
-    1/5	= 	0.2
-    1/6	= 	0.1(6)
-    1/7	= 	0.(142857)
-    1/8	= 	0.125
-    1/9	= 	0.(1)
-    1/10	= 	0.1 
+def is_prime(n):
+    if n<2:
+        return False
+    for i in range(2,math.ceil(pow(n,0.5))):
+        if n%i == 0:
+            return False
+    return True
 
-Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be seen that 1/7 has a 6-digit recurring cycle.
-
-Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.
-"""
-#if denominator in terms of 2^n * 5*m
-
-def is_repeater(d):
-    while d != 1:
-        if d%2 == 0:
-            d = d/2
-        elif d%5 == 0:
-            d = d/5
+def repeat_remainder(number,divisor):
+    """ return whenever the remainder repeats (we get a cycle)"""
+    seen = {}
+    times = 0
+    quotient = ""
+    for _ in range(divisor*4): 
+        if number in seen:
+            return times
+        if number<divisor:
+            number*=10
         else:
-            return True 
-    if d == 1:
-        return False 
+            seen[number] = True
+            times += 1
+            quotient+=str(number//divisor)
+            remainder = number % divisor
+            number = remainder
+    return -1
 
-for d in range(1000,1,-1):
-    if is_repeater(d):
-        print(d,1/d)
- 
+#if denominator in terms of 2^n * 5*m
+def get_reduced(d):
+    while d%2 == 0:
+        d = d/2
+    while d%5 == 0:
+        d = d/5
+    return math.floor(d)
+
+ans = 1
+cache = {}
+for d in range(1,1000):
+    # jab same remainder aata hai tab gone
+    d = get_reduced(d)
+    # if its not prime when reduced then we wont really get max
+    if is_prime(d):
+        if d in cache:
+            continue
+        cache[d] = repeat_remainder(1,d)
+        if cache[d] == -1:
+            print("NOOOOOO")
+        ans = max(ans,cache[d])
+for k,v in cache.items():
+    if v == ans:
+        print(k)
