@@ -19,56 +19,11 @@ int32_t main() {
     return 0;
 }
 
-vector<bool> primegen(int n) {
-    vector<bool> sev(n+1,true);
-    sev[0] = false; sev[1] = false;
-    for(int i = 2; i*i<=n; i++) {
-        if(sev[i] == true) {
-            for(int k = i*i; k<=n; k+=i) {
-                sev[k] = false;
-            }
-        }
-    }
-
-    return sev;
-}
-
 void solve() {
-    int n = (int)1e6;
-    auto sev = primegen(n);
-
-    vector<string> primes;
-    for(int i = 1; i<=n; i++) {
-        if(sev[i]) {
-            primes.push_back(to_string(i));
-        }
+    for(int n = (int)1e12; n<(int)1e13; n++) {
+        int find = n*(n-1)
+        for x in range(1,n):
+            if 2*x*(x-1) == find:
+                print(x,n-x,n)
     }
-
-    map<string, string> candy;
-    map<int, int> counts;
-    for(auto p: primes) {
-        for(int i = 0; i<=(int)p.size(); i++) {
-            // added 0 to the front so that stoi dont give
-            // error on empty string
-            string a = p.substr(0,i);
-            string b = p.substr(i);
-            if(sev[stoi("0"+a)] && sev[stoi("0"+b)]){
-                candy[a] = b;
-                if(a!=b) candy[b] = a;
-                counts[stoi(a)]++;
-                counts[stoi(b)]++;
-                //cout << a <<" " << b << "\n";
-            }
-        }
-
-        //count shoudl be atleast 4?
-    }
-    for(auto &[k,v]: counts) {
-        if(v>3) {
-            cout << k <<" ";
-        }
-    }
-    cout <<"\n";
-    //print(candy);
 }
-
